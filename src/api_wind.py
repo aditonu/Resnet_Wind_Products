@@ -9,9 +9,9 @@ Processing
   3. Processes each acquisition exactly like the training data: VV to linear power, 10 m -> 100 m area
      mean, mosaic, back to dB; incidence from the 'angle' band; look azimuth = platform heading + 90 deg.
   4. Downloads the grid (ee.data.computePixels) and writes one GeoTIFF per 5 km patch.
-  5. Runs infer_scene: ResNet direction, quality flag, 180 deg ambiguity removal with the NOAA GFS 10 m wind
-     from Earth Engine (CFSv2 before July 2015), CMOD5.N speed and map. Optionally Copernicus Marine
-     (reference="copernicus", requires copernicusmarine.login()).
+  5. Runs infer_scene: ResNet direction, quality flag, 180 deg ambiguity removal with Copernicus Marine L4
+     wind (reprocessed product, near-real-time product for recent dates), CMOD5.N speed and map.
+     Optional alternative: NOAA GFS from Earth Engine (reference="gfs").
 
 Usage
     import api_wind as A
@@ -395,13 +395,13 @@ def _process_acquisition(g, arr, grid, model_dir, out_root, provider, show, log)
 
 
 def run_api(box, start_date, end_date=None, model_dir=None, out_root=None, max_scenes=6, min_cover=0.5,
-            reference="gfs", provider=None, acquisitions=None, fetch=None, show=True, log=print):
+            reference="copernicus", provider=None, acquisitions=None, fetch=None, show=True, log=print):
     """Retrieves the wind field for every Sentinel-1 acquisition covering the box.
 
     box: (lon_min, lat_min, lon_max, lat_max); start_date, end_date: 'YYYY-MM-DD' (UTC, inclusive).
     Acquisitions covering at least min_cover of the box are processed (at most max_scenes).
     Returns one dict per acquisition with run_dir, csv, map, summary, acquisition, time_utc and cover.
-    reference: "gfs" (NOAA GFS from Earth Engine, default) or "copernicus" (needs copernicusmarine.login()).
+    reference: "copernicus" (Copernicus Marine, default; needs copernicusmarine.login()) or "gfs" (NOAA GFS from Earth Engine).
     For offline tests, pass acquisitions=[...], fetch(grid, group) -> array and provider instead of using GEE."""
     if model_dir is None or out_root is None:
         raise ValueError("model_dir and out_root are required.")
@@ -428,8 +428,8 @@ def run_api(box, start_date, end_date=None, model_dir=None, out_root=None, max_s
         log(f"{len(use)} acquisitions found; processing the first {max_scenes} (increase max_scenes for more).")
         use = use[:max_scenes]
     if provider is None:
-        provider = (copernicus_provider(os.path.join(out_root, "wind_cache"), log) if reference == "copernicus"
-                    else gfs_provider(log))
+        provider = (gfs_provider(log) if reference == "gfs"
+                    else copernicus_provider(os.path.join(out_root, "wind_cache"), log))
     results = []
     for g in use:
         try:

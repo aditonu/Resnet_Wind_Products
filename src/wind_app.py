@@ -18,7 +18,7 @@ Outputs per acquisition (in out_root/<acquisition>_<box>/):
     wind_vectors.geojson   one point per 5 km sea patch (GeoJSON FeatureCollection)
     wind_field_*.csv       full per-patch table
     map_*.png              wind-vector map, land masked
-    summary_*.json         acquisition summary and comparison with the reference wind (NOAA GFS)
+    summary_*.json         acquisition summary and comparison with Copernicus Marine wind
 """
 from __future__ import annotations
 

@@ -13,7 +13,7 @@ For every 5 km patch:
      Area flag: mean anisotropy of the area < --min_area_aniso (default 0.21) marks an area with weak
      texture (weak scenes 0.11-0.19, good scenes 0.24-0.50).
   4. Ambiguity removal: of the two senses (a, a + 180) the one closer to the reference wind direction
-     (Copernicus Marine L4 by default; the API passes NOAA GFS from Earth Engine).
+     (Copernicus Marine L4).
   5. Wind speed: CMOD5.N inversion (xsarsea) with mean VV (linear mean, in dB), median incidence angle and
      phi = wind direction (from) - radar look azimuth.
   6. Outputs: wind_field_<scene>.csv, summary_<scene>.json, map_<scene>.png, validation_table.csv
