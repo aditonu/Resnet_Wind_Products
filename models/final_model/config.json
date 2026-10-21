@@ -1,0 +1,103 @@
+{
+  "model_files": [
+    "model_0.pt",
+    "model_1.pt",
+    "model_2.pt"
+  ],
+  "models": [
+    {
+      "file": "model_0.pt",
+      "val_scenes": [
+        "perth",
+        "lima"
+      ],
+      "val_loss": 0.21686862219893743,
+      "seed": 7
+    },
+    {
+      "file": "model_1.pt",
+      "val_scenes": [
+        "chile",
+        "vietnam"
+      ],
+      "val_loss": 0.10309263819303267,
+      "seed": 107
+    },
+    {
+      "file": "model_2.pt",
+      "val_scenes": [
+        "kutch",
+        "brazil"
+      ],
+      "val_loss": 0.03613178773472706,
+      "seed": 207
+    }
+  ],
+  "lowpass_px": 1.5,
+  "min_speed": 3.0,
+  "dropout": 0.3,
+  "train_scenes": [
+    "perth",
+    "chile",
+    "kutch",
+    "Gujarat",
+    "tehuantepec",
+    "netherland",
+    "lima",
+    "vietnam",
+    "brazil",
+    "Chennai",
+    "Thirupoondi",
+    "cape_peninsula"
+  ],
+  "train_scene_ids": [
+    "S1A_20230609_DSC_RO005_011848",
+    "S1A_20240103_DSC_RO069_104805",
+    "S1A_20240104_ASC_RO088_172555",
+    "S1A_20240111_DSC_RO005_011851",
+    "S1A_20240202_DSC_RO156_100437",
+    "S1A_20240202_DSC_RO163_213533",
+    "S1A_20240207_ASC_RO055_105654",
+    "S1A_20240305_DSC_RO092_003133",
+    "S1A_20240312_ASC_RO029_173427",
+    "S1A_20241001_DSC_RO009_080139",
+    "S1A_20241112_DSC_RO092_003248",
+    "S1C_20250404_DSC_RO172_120920"
+  ],
+  "excluded_scenes": [
+    "durban",
+    "oman",
+    "san_diego",
+    "bahia",
+    "nothwest_medagascar",
+    "vancouver",
+    "vancouver_2",
+    "oaxaca",
+    "mistral",
+    "timor"
+  ],
+  "patch_px": 50,
+  "pixel_m": 100,
+  "input": "per-patch z-score of VV dB (Step A), then preprocess(lowpass_px)",
+  "output": "wind AXIS deg clockwise from North [0,180); true direction = axis or axis+180",
+  "angle_convention": "meteorological FROM, north-up images",
+  "tta": "8 dihedral transforms",
+  "cv_reference": "cross-validation: 10 unseen scenes MAE 15.9 deg, median 10.5 deg; weak-texture scenes ~45 deg (random)",
+  "created_utc": "2026-10-21 11:47:26",
+  "args": {
+    "npz": "/content/drive/MyDrive/Resnet_wind_direction/stageA/dataset_A.npz",
+    "out_dir": "/content/drive/MyDrive/Resnet_wind_direction/final_model",
+    "exclude_folders": "durban,oman,san_diego,bahia,nothwest_medagascar,vancouver,vancouver_2,oaxaca,mistral,timor",
+    "n_models": 3,
+    "lowpass_px": 1.5,
+    "min_speed": 3.0,
+    "batch_size": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "dropout": 0.3,
+    "lr_patience": 5,
+    "max_epochs": 120,
+    "patience": 15,
+    "seed": 7
+  }
+}

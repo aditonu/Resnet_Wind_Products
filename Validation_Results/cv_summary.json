@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "ALL": {
+      "scenes": 22,
+      "patches": 1813,
+      "MAE_pooled": 26.08873154795428,
+      "MAE_mean_over_scenes": 27.044945684593184,
+      "median_abs": 17.067128977645467,
+      "within15_pct": 46.001103143960286,
+      "MAE_plain_single": 27.93986653883502,
+      "MAE_tta_single": 27.044945684593184,
+      "scene_mean_abs_err": 21.815328307348345
+    },
+    "cv": {
+      "scenes": 12,
+      "patches": 1135,
+      "MAE_pooled": 16.015232687912555,
+      "MAE_mean_over_scenes": 16.195307754290166,
+      "median_abs": 10.164132969361503,
+      "within15_pct": 62.907488986784145,
+      "MAE_plain_single": 17.32537705069604,
+      "MAE_tta_single": 16.195307754290166,
+      "scene_mean_abs_err": 8.361148347977016
+    },
+    "eval_only": {
+      "scenes": 10,
+      "patches": 678,
+      "MAE_pooled": 42.952184654366306,
+      "MAE_mean_over_scenes": 40.06451120095682,
+      "median_abs": 41.13671717254395,
+      "within15_pct": 17.699115044247787,
+      "MAE_plain_single": 40.6772539246018,
+      "MAE_tta_single": 40.06451120095682,
+      "scene_mean_abs_err": 37.960344258593935
+    }
+  },
+  "args": {
+    "npz": "/content/drive/MyDrive/Resnet_wind_direction/stageA/dataset_A.npz",
+    "out_dir": "/content/drive/MyDrive/Resnet_wind_direction/cv_results",
+    "folds": 5,
+    "seeds": 1,
+    "exclude_folders": "",
+    "eval_only": "durban,oman,san_diego,bahia,nothwest_medagascar,vancouver,vancouver_2,oaxaca,mistral,timor",
+    "lowpass_px": 1.5,
+    "min_speed": 3.0,
+    "batch_size": 64,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "dropout": 0.3,
+    "lr_patience": 5,
+    "max_epochs": 120,
+    "patience": 15,
+    "seed": 42,
+    "save_models": false
+  },
+  "folds": {
+    "perth": 0,
+    "chile": 1,
+    "kutch": 2,
+    "Gujarat": 3,
+    "tehuantepec": 4,
+    "netherland": 0,
+    "lima": 1,
+    "vietnam": 2,
+    "brazil": 3,
+    "Chennai": 4,
+    "Thirupoondi": 0,
+    "cape_peninsula": 1
+  }
+}

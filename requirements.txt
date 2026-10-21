@@ -1,0 +1,13 @@
+numpy
+pandas
+scipy
+matplotlib
+torch
+rasterio
+pyproj
+xarray
+netCDF4
+earthengine-api
+copernicusmarine
+global-land-mask
+xsarsea
