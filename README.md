@@ -6,6 +6,17 @@ You draw an area on the map and choose dates. The API gives the wind direction a
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/aditonu/Resnet_Wind_Products/blob/main/notebooks/02_wind_field_api.ipynb)
 
+**New user?** Read the [Setup Guide](SETUP_GUIDE.md).
+
+## Models used
+
+| Part | Model | Details |
+|---|---|---|
+| Wind direction | **ResNet (M64RN4)** | 4 residual blocks × 64 filters (Zanchetta & Zecchetto, 2021). Ensemble of 3 models, trained on 12 Sentinel-1 scenes (21 Oct 2026). Input: one 5 km patch (50 × 50 pixels of 100 m). |
+| Wind speed | **CMOD5.N** | C-band VV geophysical model function (Hersbach, 2010), from the `xsarsea` library. Not trained. |
+| Correct direction (180°) and validation | **Copernicus Marine L4 wind** | hourly, 0.125° (`cmems_obs-wind_glo_phy_my_l4_0.125deg_PT1H`, near-real-time product for recent dates) |
+| Satellite data | **Sentinel-1 IW GRDH, VV** | from Google Earth Engine (`COPERNICUS/S1_GRD`) |
+
 ## How to use the API
 
 1. Click **Open in Colab** above.
@@ -55,7 +66,8 @@ Tested on scenes the model did not see in training (details in `Validation_Resul
 | `notebooks/01_training_and_validation.ipynb` | dataset, training and validation |
 | `gee/s1_patch_export.js` | Earth Engine script used to download training images |
 | `src/` | Python code |
-| `models/final_model/` | trained model |
+| `SETUP_GUIDE.md` | step-by-step setup for new users |
+| `models/final_model/` | trained model (weights of the 3 ResNet M64RN4 models) |
 | `Validation_Results/` | validation table and maps |
 | `requirements.txt` | Python libraries |
 
