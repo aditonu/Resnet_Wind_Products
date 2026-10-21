@@ -43,11 +43,27 @@ Wind direction is the direction the wind comes **from** (0° = north, 90° = eas
 
 ## How it works
 
-1. Sentinel-1 image (VV) is downloaded from Google Earth Engine and averaged to 100 m.
+1. Sentinel-1 image is downloaded from Google Earth Engine with three bands (see below) and averaged to 100 m.
 2. The area is cut into 5 km × 5 km patches.
 3. A ResNet model finds the wind direction from the wind streaks in each patch.
 4. Copernicus Marine wind decides which of the two opposite directions is correct.
 5. Wind speed is calculated with the CMOD5.N model.
+
+## Data from Google Earth Engine
+
+From Sentinel-1 (`COPERNICUS/S1_GRD`: IW mode, VV polarisation, GRDH 10 m) we take **three bands for every 5 km patch**:
+
+| Band | Source in Earth Engine | Used for |
+|---|---|---|
+| **VV backscatter** σ⁰ (dB) | `VV` band, 10 m → 100 m (mean in linear power, then back to dB) | **direction**: the ResNet reads the wind streaks in this image; **speed**: mean VV of the patch goes into CMOD5.N |
+| **Incidence angle** (°) | `angle` band | **speed**: the same wind gives different backscatter at different radar angles |
+| **Radar look azimuth** (°) | `platformHeading + 90°` (Sentinel-1 looks to the right) | **speed**: CMOD5.N needs the angle between wind and radar, φ = wind direction − look azimuth |
+
+Direction needs only VV; speed needs all three.
+
+Each patch is saved as a 3-band GeoTIFF of 50 × 50 pixels (100 m), named like `C001_S1A_20240305_DSC_RO092_003133.tif` (patch, satellite, date, pass, orbit, time). With `gee/s1_patch_export.js` we exported **31 Sentinel-1 scenes** (10 × 10 patches each, 50 km × 50 km): **3,001 patch files**, of which **2,795** are sea patches after removing land and no-data, and **2,092** have a Copernicus Marine wind label for training and validation.
+
+In the API the same three bands are downloaded directly with `ee.data.computePixels`, with exactly the same processing.
 
 ## Results
 
